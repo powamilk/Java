@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow</title>
+    <link rel="stylesheet" href="slideshow.css">
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide">
+          <img src="Anh/1.jpg" alt="Image 1" class="slide-image">
+        </div>
+        <div class="slide">
+          <img src="Anh/2.jpg" alt="Image 2" class="slide-image">
+        </div>
+        <div class="slide">
+          <img src="Anh/3.jpg" alt="Image 3" class="slide-image">
+        </div>
+        <div class="slide">
+          <img src="Anh/4.jpg" alt="Image 4" class="slide-image">
+        </div>
+        <div class="slide">
+          <img src="Anh/5.jpg" alt="Image 5" class="slide-image">
+        </div>
+      </div>
+      <div class="controls-container">
+        <button id="prev">Prev</button>
+        <button id="stop">Stop</button>
+        <button id="start">Start</button>
+        <button id="next">Next</button>
+      </div>
+
+      <script src="slideshow.js"></script>
+</body>
+</html>
+var slideIndex = 0;
+    var slides = document.getElementsByClassName("slide");
+    var intervalId;
+
+    function showSlide(n) {
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[n].style.display = "block";
+    }
+
+    function nextSlide() {
+      slideIndex++;
+      if (slideIndex >= slides.length) {
+        slideIndex = 0;
+      }
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex--;
+      if (slideIndex < 0) {
+        slideIndex = slides.length - 1;
+      }
+      showSlide(slideIndex);
+    }
+
+    function startSlideshow() {
+      intervalId = setInterval(nextSlide, 1000
+      );
+    }
+
+    function stopSlideshow() {
+      clearInterval(intervalId);
+    }
+
+    document.getElementById("prev").addEventListener("click", prevSlide);
+    document.getElementById("stop").addEventListener("click", stopSlideshow);
+    document.getElementById("start").addEventListener("click", startSlideshow);
+    document.getElementById("next").addEventListener("click", nextSlide);
+
+    startSlideshow();
+
