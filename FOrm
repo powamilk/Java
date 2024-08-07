@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <h1>Đăng ký khóa học</h1>
+
+  <label for="name">Họ và tên:</label>
+  <input type="text" id="name">
+  <span id="name-error" class="error hidden">Vui lòng nhập họ và tên.</span>
+
+  <label for="course">Khóa học:</label>
+  <select id="course">
+    <option value="">Chọn khóa học</option>
+    <option value="course1">Khóa học 1</option>
+    <option value="course2">Khóa học 2</option>
+    <option value="course3">Khóa học 3</option>
+  </select>
+  <span id="course-error" class="error hidden">Vui lòng chọn khóa học.</span>
+
+  <label for="tuition">Học phí:</label>
+  <input type="text" id="tuition" readonly>
+
+  <label for="participants">Số lượng người tham gia:</label>
+  <input type="number" id="participants" min="1">
+  <span id="participants-error" class="error hidden">Vui lòng nhập số lượng người tham gia.</span>
+
+  <label for="learning-method">Hình thức học:</label>
+  <div>
+    <input type="radio" id="online" name="learning-method" value="online" checked>
+    <label for="online">Online</label>
+    <input type="radio" id="office" name="learning-method" value="office">
+    <label for="office">Office</label>
+  </div>
+  <span id="learning-method-error" class="error hidden">Vui lòng chọn hình thức học.</span>
+
+  <label for="additional-cost">Chi phí thêm:</label>
+  <input type="text" id="additional-cost" readonly>
+
+  <label for="total-payment">Tổng tiền thanh toán:</label>
+  <input type="text" id="total-payment" readonly>
+
+  <button onclick="registerCourse()">Đăng ký</button>
+
+  <script src="form.js"></script>
+</body>
+</html>
+
+const courseData = {
+    "course1": 1000000,
+    "course2": 2000000,
+    "course3": 3000000
+  };
+
+  const courseSelect = document.getElementById("course");
+  const tuitionInput = document.getElementById("tuition");
+  const participantsInput = document.getElementById("participants");
+  const onlineRadio = document.getElementById("online");
+  const officeRadio = document.getElementById("office");
+  const additionalCostInput = document.getElementById("additional-cost");
+  const totalPaymentInput = document.getElementById("total-payment");
+
+  courseSelect.addEventListener("change", updateTuition);
+  participantsInput.addEventListener("input", calculateTotalPayment);
+  onlineRadio.addEventListener("change", updateAdditionalCost);
+  officeRadio.addEventListener("change", updateAdditionalCost);
+
+  function updateTuition() {
+    const selectedCourse = courseSelect.value;
+    const tuition = courseData[selectedCourse] || 0;
+    tuitionInput.value = tuition.toLocaleString() + " VND";
+    calculateTotalPayment();
+  }
+
+  function updateAdditionalCost() {
+    if (onlineRadio.checked) {
+      additionalCostInput.value = "0 VND";
+    } else {
+      additionalCostInput.value = "1000 VND";
+    }
+    calculateTotalPayment();
+  }
+  
+  function additionalCost(){
+      const online = document.getElementById("online").value
+      const office = document.getElementById("offline").value
+      learningMethod.Value = learningMethod.T
+
+  }
+
+  function registerCourse() {
+    let isValid = true;
+
+    document.querySelectorAll('.error').forEach(span => span.classList.add('hidden'));
+
+    const name = document.getElementById("name").value;
+    const course = document.getElementById("course").value;
+    const participants = document.getElementById("participants").value;
+    const learningMethod = document.querySelector("input[name='learning-method']:checked");
+    const totalPayment = document.getElementById("total-payment").value;
+
+    if (!name) {
+      document.getElementById("name-error").classList.remove('hidden');
+      isValid = false;
+    }
+
+    if (!course) {
+      document.getElementById("course-error").classList.remove('hidden');
+      isValid = false;
+    }
+
+    if (!participants) {
+      document.getElementById("participants-error").classList.remove('hidden');
+      isValid = false;
+    }
+
+    if (!learningMethod) {
+      document.getElementById("learning-method-error").classList.remove('hidden');
+      isValid = false;
+    }
+
+    if (isValid) {
+      alert("Đăng ký khóa học thành công!");
+    } else {
+      alert("Vui lòng nhập đầy đủ thông tin.");
+    }
+  }
